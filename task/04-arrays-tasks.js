@@ -322,7 +322,8 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-   throw new Error('Not implemented');
+   var digits = Array.of("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+    return arr.sort(function(a,b) {return digits.indexOf(a)-digits.indexOf(b)});
 }
 
 /** 
@@ -338,7 +339,7 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-   throw new Error('Not implemented');
+   return arr.reduce(function(previousValue, currentValue) {return previousValue + currentValue},0);
 }
  
 /** 
@@ -354,7 +355,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-   throw new Error('Not implemented');
+   return arr.reduce(function(previousValue, currentValue) {return previousValue + !currentValue},0);
 }
 
 /**
@@ -372,7 +373,7 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-   throw new Error('Not implemented');
+   return arr.reduce(function(previousValue, currentValue) {return previousValue + (currentValue === item)},0);
 }
 
 /**
@@ -387,7 +388,7 @@ function findAllOccurences(arr, item) {
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
 function toStringList(arr) {
-   throw new Error('Not implemented');
+   return arr.join(",");
 }
 
 
@@ -416,7 +417,10 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   throw new Error('Not implemented');
+   return arr.sort(function (a, b) {
+    if (a.country + a.city == b.country + b.city) return 0;
+	else if (a.country + a.city > b.country + b.city) return 1;
+	else return -1;});
 }
 
 /**
@@ -438,7 +442,8 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]   
  */
 function getIdentityMatrix(n) {
-   throw new Error('Not implemented');
+   return Array.from({'length' : n}, function(e1, i1) { 
+          return  Array.from({'length' : n}, function(e2, i2) {return Boolean(i1 == i2)} )});
 }
 
 /**
@@ -455,7 +460,7 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-   throw new Error('Not implemented');
+   return Array.from({ length: end - start + 1 }, function(v,k) {return start + k});
 }
 
 /**
@@ -470,7 +475,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-   throw new Error('Not implemented');
+   return Array.from(new Set(arr));
 }
 
 /**
@@ -504,7 +509,13 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+   return array.reduce((map, elem) => {
+       var key = keySelector(elem);
+       var value = valueSelector(elem);
+       if (!map.has(key)) map.set(key, []);
+       map.get(key).push(value);
+       return map;       
+   }, new Map());
 }
 
 
@@ -520,7 +531,8 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+    var result_array = arr.map(function (e) {return childrenSelector(e)});
+    return result_array.reduce(function(a, b) {return a.concat(b)});
 }
 
 
@@ -537,7 +549,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+    return indexes.reduce(function(a, i) { return a[i]}, arr);
 }
 
 
@@ -560,7 +572,7 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+    return arr.slice(-arr.length / 2) .concat(arr.slice(arr.length / 2, -arr.length / 2)) .concat(arr.slice(0, arr.length / 2));
 }
 
 
