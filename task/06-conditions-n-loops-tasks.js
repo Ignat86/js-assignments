@@ -330,7 +330,12 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    var count = str.length;
+    for (var i = 0; i < count; i++) {
+        str = str.replace(/(\[\])*(\(\))*(\{\})*(\<\>)*/g, '');
+        if (str.length == 0) break;
+    }
+	return str.length == 0;
 }
 
 
@@ -366,7 +371,22 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    var time = endDate.getTime() - startDate.getTime();
+    var sec = 1000;
+    var min = 60 * sec;
+    var hour = 60 * min;
+    var day = 24 * hour;
+    if (time <= 45 * sec) return 'a few seconds ago';
+    else if (time <= 90 * sec) return 'a minute ago';
+    else if (time <= 45 * min) return `${Math.round((time - 1) / min)} minutes ago`;
+    else if (time <= 90 * min) return 'an hour ago';
+    else if (time <= 22 * hour) return `${Math.round((time - 1) / hour)} hours ago`;
+    else if (time <= 36 * hour) return 'a day ago';
+    else if (time <= 25 * day) return `${Math.round((time - 1) / day)} days ago`;
+    else if (time <= 45 * day) return 'a month ago';
+    else if (time <= 345 * day) return `${Math.round((time - 1) / day / 30)} months ago`;
+    else if (time <= 545 * day) return 'a year ago';
+	else return `${Math.round((time - 1) / day / 365)} years ago`;
 }
 
 
@@ -407,7 +427,11 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+    var path = pathes.reduce(function(p, e)  {
+      for(var i=0; i < Math.min(p.length, e.length) && p[i] == e[i]; i++);  
+      return p.slice(0, i);     
+    }).match(/.*\//);
+    return path != null ? path[0] : '';
 }
 
 
@@ -430,7 +454,17 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    var n = m1.length;
+    var m = m2[0].length;
+    var k = m2.length;
+    var result = Array.from({'length' : n}, () => 
+              Array.from({'length':m}, () => 0));
+    for( var x = 0; x < n; x++)
+    for( var y = 0; y < m; y++)
+    for( var i = 0; i < k; i++) {
+        result[x][y] += m1[x][i]*m2[i][y];
+    }
+    return result;
 }
 
 
@@ -465,7 +499,18 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    for (var i = 0; i < 3; i++) {
+        if (position[i][0] === position[i][1] && position[i][1] === position[i][2] && position[i][0] !== undefined) 
+		return position[i][0];
+    }
+    for (var j = 0; j < 3; j++)
+        if (position[0][j] === position[1][j] && position[1][j] === position[2][j] && position[0][j] !== undefined) 
+		return position[0][j];
+    if (position[0][0] === position[1][1] && position[1][1] === position[2][2] && position[1][1] !== undefined) 
+		return position[1][1];
+    if (position[0][2] === position[1][1] && position[1][1] === position[2][0] && position[1][1] !== undefined) 
+		return position[1][1];
+    return undefined;
 }
 
 
