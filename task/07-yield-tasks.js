@@ -33,7 +33,17 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    var bottle = function(n){
+        if (n==1) return "1 bottle";
+        else  return n+ " bottles"
+    };
+    for (let i = 99; i > 0; i--) {
+        yield `${bottle(i)} of beer on the wall, ${bottle(i)} of beer.`;
+        if (i > 1) yield `Take one down and pass it around, ${bottle(i - 1)} of beer on the wall.`;
+        else yield `Take one down and pass it around, no more bottles of beer on the wall.`;
+    }
+    yield 'No more bottles of beer on the wall, no more bottles of beer.';
+    yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';
 }
 
 
@@ -47,7 +57,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    var previous,current,next;
+    yield previous = 0; 
+    yield current = 1;
+    while(true) {
+        yield next = previous + current;
+        previous = current; 
+		current = next;
+    }    
 }
 
 
@@ -82,7 +99,14 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let tree = [root];
+    while (tree.length) {
+        let node = tree.pop();
+        yield node;
+        if (node.children) {
+            tree.push(...node.children.reverse());
+        }
+    }
 }
 
 
@@ -108,7 +132,13 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let tree = [root];
+    for (let node of tree) {
+        yield node;
+        if (node.children) {
+            tree.push(...node.children);
+        }
+    }
 }
 
 
@@ -126,7 +156,21 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    var seq1 = source1();
+    var seq2 = source2();
+    var s1 = seq1.next();
+    var s2 = seq2.next();
+    
+     while (!s1.done || !s2.done){
+	 
+        if (s2.done || s1.value < s2.value) {
+            yield s1.value;
+            s1 = seq1.next();
+        } else {
+            yield s2.value;
+            s2 = seq2.next();
+        }
+	}
 }
 
 
